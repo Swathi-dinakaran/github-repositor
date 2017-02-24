@@ -1,0 +1,20 @@
+alter table students add column created_at timestamp,add column updated_at timestamp null;
+
+alter table marks add column created_at timestamp,add column updated_at timestamp null;
+
+alter table medals add column created_at timestamp,add column updated_at timestamp null;
+
+update marks set quarterly=0 where quarterly is null;
+update marks set half_yearly=0 where half_yearly is null;
+update marks set annual=0 where annual is null;
+alter table marks modify quarterly integer not null,modify half_yearly integer not null,modify annual integer not null;
+
+alter table marks modify created_at timestamp default current_timestamp ;
+update marks set updated_at =current_timestamp where updated_at is null;
+alter table marks modify updated_at timestamp default current_timestamp on update current_timestamp;
+
+select id,name,t2.year,avg1,ifnull(count1,0) as no_of_medals from students inner join (select student_id,year,avg(annual) as avg1 from marks group by year,student_id) as t2 on students.id=t2.student_id left outer join (select student_id,count(student_id) as count1,year from medals group by student_id,year) as t3 on students.id=t3.student_id and t2.year=t3.year;
+
+create table students_summary (student_id bigint(19),student_name varchar(100),year int(11),percentage int(11),no_of_medals_received integer);
+
+insert into students_summary (student_id,student_name,year,percentage,no_of_medals_received) select id,name,t2.year,avg1,ifnull(count1,0) from students inner join (select student_id,year,avg(annual) as avg1 from marks group by year,student_id) as t2 on students.id=t2.student_id left outer join (select student_id,count(student_id) as count1,year from medals group by student_id,year) as t3 on students.id=t3.student_id and t2.year=t3.year;
