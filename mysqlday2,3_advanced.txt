@@ -1,0 +1,57 @@
+1.mysql>
+select name,subject_id,year from students inner join marks on students.id=marks.student_id where annual is NULL and half_yearly is NULL and quarterly is NULL;
+
+2.mysql>
+select name,sum(annual) from students inner join marks on students.id=marks.student_id group by(name);
+
+3.mysql>
+select name,sum(quarterly),avg(grade) from students inner join marks on students.id=marks.student_id where year='2003' group by(name);
+
+4.mysql>
+select name,avg(grade),count(medals.id) as total from students inner join medals on students.id=medals.student_id group by(medals.student_id) having total>3 and (avg(grade)=9 or avg(grade)=10);
+
+5.mysql> select name,avg(grade),count(medals.id) as total from students left outer join medals on students.id=medals.student_id group by(students.id) having total<2 ;
+
+6.mysql> select name,t3.year from students inner join (select count(id),student_id,year from marks  where annual>=90 and student_id not in(select distinct student_id from medals where year=marks.year) group by student_id,year having count(id)=4)as t3 on students.id=t3.student_id;
+
+7.
+select name,game_id,medal_won,year,grade from medals inner join students on medals.student_id=students.id where (select count(student_id) from medals)>3 order by name;
+
+8.
+select name,count(medals.student_id),sum(ifnull(quarterly,0))/5 as quarterly_per,sum(ifnull(half_yearly,0))/5 as half_yearly,sum(ifnull(annual,0))/5 as annual_per,marks.year,marks.grade from students inner join marks on students.id=marks.student_id inner join medals on medals.student_id=students.id group by year,medals.student_id,marks.student_id,grade; 
+
+9.
+select students.name,count1,quarterly_per,half_yearly_per,annual_per,t1.year,grade from students,
+(select student_id,year,grade,sum(ifnull(quarterly,0))/5 as quarterly_per,sum(ifnull(half_yearly,0))/5 as half_yearly_per,sum(ifnull(annual,0))/5 as annual_per from marks group by year,student_id,grade) as t1 
+inner join 
+(select count(student_id) as count1,year,student_id from medals group by student_id,year) as t2 
+on t1.student_id=t2.student_id and t1.year=t2.year 
+where t1.student_id=students.id;
+
+10.
+select student_id,year,grade,
+case when sum(quarterly) >450
+then 'A'
+when sum(quarterly) <450 and sum(quarterly)>350
+then 'B'
+when sum(quarterly) <350 and sum(quarterly)>250
+then 'C'
+else 'D'
+END as q_grade,
+case when sum(half_yearly) >450
+then 'A'
+when sum(half_yearly) <450 and sum(half_yearly)>350
+then 'B'
+when sum(half_yearly) <350 and sum(half_yearly)>250
+then 'C'
+else 'D'
+END as h_grade,
+case when sum(annual) >450
+then 'A'
+when sum(annual) <450 and sum(annual)>350
+then 'B'
+when sum(annual) <350 and sum(annual)>250
+then 'C'
+else 'D'
+END as a_grade 
+from marks group by student_id,year,grade;

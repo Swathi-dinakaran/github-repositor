@@ -1,0 +1,19 @@
+create database rail;
+
+use rail;
+
+create table coaches(coachcode varchar(20) primary key,costperKm integer);
+
+create table trains(trainNo integer(6) primary key,trainname varchar(20));
+
+create table traincoaches(trainNo integer(6),coachcode varchar(20),noofseats integer,foreign key(trainNo) references trains(trainNo),foreign key(coachcode) references coaches(coachcode));
+
+create table station(stationid integer(3) primary key,stationcode varchar(5));
+create table routes(route_id integer primary key,originstationid integer(3),destinationstationid integer(3),distance integer,foreign key(originstationid) references station(stationid),foreign key(destinationstationid) references station(stationid));
+
+create table trainroutemaps(route_id integer,trainNo integer(6),arrivaltime time,departuretime time,duration long,foreign key(route_id) references routes(route_id),foreign key(trainNo) references trains(trainNo),primary key(route_id,trainNo));
+
+create table bookings(bookingrefno integer(6) primary key,route_id integer,trainNo integer(6),coachcode varchar(20),dateofjourney date,dateofbooking date,nooftickets integer,foreign key(route_id) references trainroutemaps(route_id),foreign key(trainNo) references trainroutemaps(trainNo),foreign key(coachcode) references coaches(coachcode));
+
+create table users(userid varchar(10) primary key,loginid varchar(10),lpassword varchar(15));
+

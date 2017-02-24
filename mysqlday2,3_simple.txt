@@ -1,0 +1,27 @@
+6.mysql>
+select student_id,subject_id,avg((ifnull(quarterly,0)+ifnull(half_yearly,0)+ifnull(annual,0))/3)as average,year from marks where year='2003' or year='2004' group by student_id,subject_id,year;
+
+
+5.mysql>select student_id,subject_id,avg((ifnull(quarterly,0)+ifnull(half_yearly,0)+ifnull(annual,0))/3)as average,year from marks group by student_id,subject_id,year;
+
+4.mysql> select student_id, subject_id, year, quarterly, half_yearly, annual from marks,students where quarterly>90 and half_yearly>90 and annual>90 ;
+
+3.mysql> select student_id,subject_id,year from students,marks(where (annual is not NULL or half_yearly is not NULL or quarterly is not NULL) and marks.student_id=students.id;
+
+2.mysql> select student_id,subject_id,year from students,marks where annual IS NULL and marks.student_id=students.id and year='2005';
+
+1.mysql> select * from marks where annual IS NULL;
+
+6.mysql> select name from students order by name asc limit 2,2;
+
+5.mysql> select name from students order by name asc limit 2;
+
+4.mysql> select * from students order by name asc;
+
+3.mysql> select * from students where name like '%a%';
+
+2.mysql> select * from students where name like 'h%';
+
+1.mysql>select * from students;
+
+*)mysql> source /Users/swathi/Training_projects/sample-sql-data.sql

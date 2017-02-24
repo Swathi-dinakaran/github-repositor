@@ -1,0 +1,78 @@
+<html>
+<head>
+<script type="text/javascript">
+    function update()
+    {
+		var qs = new Querystring();
+		var v1 = qs.get("e");
+		document.getElementById("email").innerHTML = v1.toString();
+	}
+</script>
+<title>edit</title>
+</head>
+<style type="text/css">
+	h3{
+		background-color:green;
+	}
+	form{
+		padding-left: 100px
+	}
+	input{
+		position: absolute;left: 500px;
+	}
+	a{
+		position: absolute;left:600px;
+	}
+	select{
+		position: absolute;left:633px;
+	}
+	#sub{
+		background-color: violet;
+	}
+	#l
+	{
+				position: absolute;left:633px;
+	}
+</style>
+<body onLoad="update()">
+<h3>Space portal</h3>
+<h2> edit details</h2>
+<form method="get " action="http://localhost:9999/hello/signup">
+<b>name:</b>
+<input type="text" name="firstname" >
+<input type="text" name="lastname" id="l">
+</br>
+<br>
+<b>email:</b>
+<input type="email" name="email" >
+</br>
+<br>
+<b>address:</b>
+<input type="text" name="a1" placeholder="address line 1">
+</br>
+<input type="text" name="a2" placeholder="address line 2">
+</br>
+<input type="text" name="city" placeholder="city">
+<select name="state">state
+	<option value=""  selected hidden>State</option>
+	<option value="state1">state1 </option>
+	<option value="state2">state2 </option>
+	<option value="state3">state3 </option>
+</select>
+<br>
+</br>
+<input type="text" name="zip" placeholder="zip">
+<select name="city" value="Country" >
+	<option value=""  selected hidden>Country</option>
+	<option value="country1">country1 </option>
+	<option value="country2">country2 </option>
+	<option value="country3">country3 </option>
+</select>
+<br>
+<br>
+<input type="submit" value="Save Details" id="sub">
+<a href>Discard</a>
+</form>
+</body>
+</html>
+

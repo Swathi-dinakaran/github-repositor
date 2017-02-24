@@ -1,0 +1,65 @@
+<html>
+<head>
+<script type="text/javascript">
+	function validateForm() {
+    var x = document.forms ["f1"] ["e"] .value;
+    var y = document.forms ["f1"] ["pass"] .value;
+    if (x == ""||y=="") {
+        alert("Name or password must be filled out");
+        return false;
+    }
+}
+</script>
+<style type="text/css">
+	#button{
+		background-color:#ff6666;
+		text-transform:uppercase;
+		border-style: none;
+	}
+	a
+	{
+		position:relative;
+		text-decoration:underline;
+	}
+	body
+	{
+		border: 100px solid #333333;
+		align-self: center;
+		padding: 50px 50px 50px 50px;
+	}
+	h1
+	{
+		text-align:center
+	}
+	h2
+	{
+		text-align:center
+	}
+	#x
+	{
+		align-self: center;
+		border-style:none;
+		border-bottom: 1px solid #333333;
+		width: 40%;
+	}
+</style>
+<title>login</title>
+</head>
+<body>
+<h1>Space Portal</h1>
+<h2> login</h2>
+<form name="f1" method="get " action="file:///Users/swathi/Training_projects/cssedit.html" onsubmit="return validateForm()">
+<br>
+<br>
+<input hint="Username" type="email" name="e" id="x" placeholder="email">
+<br>
+<br>
+<input type="password" name="pass" id="x" placeholder="password">
+<br>
+<br>
+<input type="submit" value="login" id="button">
+<a href="">Dont remember password ?</a>
+ 
+</form>
+</body>
+</html>
